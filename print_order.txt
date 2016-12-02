@@ -1,0 +1,117 @@
+﻿var nparams = $.request.parameters.length;
+
+
+
+if (nparams < 1) {
+
+          
+
+$.response.status = $.net.http.INTERNAL_SERVER_ERROR;
+
+
+
+}
+else 
+{  
+  
+        
+var output = '';
+        
+
+	  
+try {
+               
+
+
+            	var order = $.request.parameters.get('order');
+            
+            
+		var data = JSON.parse(order);
+               
+            
+		var conn = $.db.getConnection();
+   
+            
+		var pCall = conn.prepareCall("{call \"USER\".calc_order(?)}");
+               
+            
+		pCall.setString(1,data.data);
+             
+            
+		var rs = pCall.execute();
+            
+            
+		conn.commit();
+            
+            
+		var pStmt = conn.prepareStatement("select id, PRICE, name from \"USER\".CHEQUE");
+            
+            
+                var result = pStmt.executeQuery();
+             
+            
+                var rows = [];
+               
+            
+                while (result.next()) {
+                
+			var row = {};
+                  
+                
+			row.id = result.getInteger(1);
+                  
+                
+			row.price = result.getDouble(2);
+                  
+                
+			row.name = result.getString(3);
+                   
+                
+			rows.push(row);
+            
+		}		
+                
+            
+		output = output + JSON.stringify(rows);
+                   
+                             
+       
+                rs.close();
+
+                result.close();              
+        
+                pCall.close();
+            
+        
+                conn.close();
+             
+             
+               
+            
+		$.response.status = $.net.http.OK;
+               
+            
+		$.response.contentType = "text/json";
+              
+            		
+		response.setBody(output);
+                   
+      
+  
+	  } catch (e) {
+   
+            //log the error
+            
+ 
+		$.trace.fatal(e.message);
+               
+		//return 501
+ $.response.setBody(e.message);     
+
+		 $.response.status = $.net.http.INTERNAL_SERVER_ERROR;
+       
+ 
+	  }	
+    
+
+}

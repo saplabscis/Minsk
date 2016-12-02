@@ -1,0 +1,65 @@
+﻿CREATE  PROCEDURE calc_order(IN product_list NVARCHAR(150)) 
+
+LANGUAGE SQLSCRIPT AS 
+
+len INTEGER:=0;
+
+pos INTEGER:=0; 
+
+order_string NVARCHAR(100):=product_list;
+
+product_id INTEGER:=0;
+
+count INTEGER:=0;
+
+total_sum DOUBLE:=0;
+
+BEGIN
+    
+	delete from orders where 1=1;
+    
+	delete from CHEQUE where 1=1;
+    
+	select LENGTH(order_string) into len from dummy;
+    
+	while len > 0 do
+         
+		select locate(order_string,';') into pos from dummy;
+         
+		if :pos > 0 then
+            
+			select TO_INTEGER(SUBSTRING(order_string,0,:pos-1)) into product_id from dummy;
+            
+			insert into orders values(:product_id);
+            
+                	count:=count+1;
+            
+			select RIGHT(order_string,:len-:pos) into order_string from dummy;
+            
+			len:=:len - :pos;
+         
+		else 
+            
+			break;
+         
+		end if;
+    
+	end while;
+    
+    
+	IF :count > 0 THEN
+        
+		insert into CHEQUE
+        
+		select a.id, PRICE, name from (select b.id, a.PRICE, b.name from price a inner join products b on a.id=b.id) a WHERE a.id in (select id from orders);
+        
+		select SUM(PRICE) into total_sum from CHEQUE;
+        
+		select -1, :total_sum, 'TOTAL' from dummy 
+        
+		insert into CHEQUE;
+    
+	END IF;
+
+
+END

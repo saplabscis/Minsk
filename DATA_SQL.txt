@@ -1,0 +1,39 @@
+﻿
+insert into PRICE values (1,28.5);
+insert into PRICE values (2,31);
+insert into PRICE values (3,35);
+insert into PRICE values (4,40);
+insert into PRICE values (5,21);
+insert into PRICE values (6,45.5);
+insert into PRICE values (7,35.5);
+insert into PRICE values (8,28);
+insert into PRICE values (9,15);
+insert into PRICE values (10,40.5);
+insert into PRICE values (11,15.5);
+insert into PRICE values (12,50.3);
+insert into PRICE values (13,48.5);
+insert into PRICE values (14,30.5);
+insert into PRICE values (15,15.5);
+insert into PRICE values (16,50);
+insert into PRICE values (17,45.5);
+insert into PRICE values (18,30.5);
+
+insert into products values (1, 'молоко домик в деревне 3.5%');
+insert into products values (2, 'мороженное пломбир класс.');
+insert into products values (3, 'мороженное рожок');
+insert into products values (4, 'мороженное nestle super');
+insert into products values (5, 'творог аладушкин 300г');
+insert into products values (6, 'ряженка класс. 400г');
+insert into products values (7, 'сырок в глазури аладушкин');
+insert into products values (8, 'кефир класс. аладушкин');
+insert into products values (9, 'молоко рузское 1.5%');
+insert into products values (10, 'суфле в шоколаде александров');
+insert into products values (11, 'творожок александров');
+insert into products values (12, 'кефир александров');
+insert into products values (13, 'молоко александров');
+insert into products values (14, 'мороженное эскимо в шок.');
+insert into products values (15, 'мороженное то самое СССР');
+insert into products values (16, 'мороженное пломбир золото');
+insert into products values (17, 'мороженное пломбир стаканчик');
+insert into products values (18, 'молоко Останкино 5%');
+
